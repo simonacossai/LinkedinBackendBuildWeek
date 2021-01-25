@@ -1,6 +1,7 @@
 const express = require("express");
 
 const Post = require("../../db").Post;
+const Like = require("../../db/Likes");
 
 const router = express.Router();
 
@@ -15,10 +16,10 @@ router.post("/", async (req, res) => {
   }
 });
 
-// GET ALL POSTS
+// GET ALL POSTS with likes
 router.get("/", async (req, res) => {
   try {
-    const posts = await Post.findAll();
+    const posts = await Post.findAll({ include: [{ model: Like }] });
     res.send(posts);
   } catch (error) {
     console.log(error);
@@ -26,10 +27,13 @@ router.get("/", async (req, res) => {
   }
 });
 
-// Get a specific post
+// Get a specific post with likes
 router.get("/:id", async (req, res) => {
   try {
-    const requestedPost = await Post.findAll({ where: { _id: req.params.id } });
+    const requestedPost = await Post.findOne({
+      where: { _id: req.params.id },
+      include: [{ model: Like }],
+    });
     res.send(requestedPost);
   } catch (error) {
     console.log(error);
