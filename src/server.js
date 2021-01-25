@@ -1,7 +1,7 @@
 const express = require("express");
 require("dotenv").config();
 const cors = require("cors");
-const models = require("./db");
+const models = require("./utilities/db");
 const {
   badRequestHandler,
   notFoundHandler,
@@ -10,7 +10,7 @@ const {
 // ROUTERS
 const postRouter = require("./services/posts/index");
 const userRouter = require("./services/users/index");
-const experiencesRoute = require("./services/experiences");
+const experiencesRoute = require("./services/experiences/index");
 
 const server = express();
 const port = process.env.PORT || 3001;
@@ -32,4 +32,3 @@ models.sequelize
     server.listen(port || 3001, () => console.log("Running on port " + port));
   })
   .catch((e) => console.log(e));
-
