@@ -1,21 +1,19 @@
 const express = require("express");
 const User = require("../../db").User;
 const { Op } = require("sequelize");
-const multer = require("multer")
-const cloudinary = require("cloudinary").v2
-const { CloudinaryStorage } = require("multer-storage-cloudinary")
+const multer = require("multer");
+const cloudinary = require("cloudinary").v2;
+const { CloudinaryStorage } = require("multer-storage-cloudinary");
 const upload = multer({});
 const router = express.Router();
 
-
 const cloudStorage = new CloudinaryStorage({
-    cloudinary: cloudinary,
-    params: {
-        folder: "users"
-    }
-  })
-  const cloudMulter =  multer({ storage: cloudStorage})
-
+  cloudinary: cloudinary,
+  params: {
+    folder: "users",
+  },
+});
+const cloudMulter = multer({ storage: cloudStorage });
 
 router
   .route("/")
@@ -76,29 +74,33 @@ router
     }
   });
 
-  router.post(async (req, res, next) => {
-    try {
-      const newElement = await User.update(req.body);
-      res.send(newElement);
-    } catch (e) {
-      console.log(e);
-      next(e);
-    }
-  });
- 
-  router.put("/:id/upload", cloudMulter.single("userImage"), async (req, res, next) =>{
-    try {
-      const newImage = { ...req.body, date: new Date() }
-        User.update(
-          {image: req.file.path},
-          {returning: true, where: {id: req.params.id} }
-        )
+router.post(async (req, res, next) => {
+  try {
+    const newElement = await User.update(req.body);
+    res.send(newElement);
+  } catch (e) {
+    console.log(e);
+    next(e);
+  }
+});
 
-      res.status(201).send("updated")
+router.put(
+  "/:id/upload",
+  cloudMulter.single("userImage"),
+  async (req, res, next) => {
+    try {
+      const newImage = { ...req.body, date: new Date() };
+      User.update(
+        { image: req.file.path },
+        { returning: true, where: { id: req.params.id } }
+      );
+
+      res.status(201).send("updated");
     } catch (error) {
-      console.log(error)
-      next(error)
+      console.log(error);
+      next(error);
     }
-  })
+  }
+);
 
 module.exports = router;

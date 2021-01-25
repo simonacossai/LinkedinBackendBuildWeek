@@ -1,7 +1,7 @@
 const express = require("express");
 
 const Post = require("../../db").Post;
-const Like = require("../../db/Likes");
+// const Like = require("../../db").User;
 
 const router = express.Router();
 
@@ -19,7 +19,7 @@ router.post("/", async (req, res) => {
 // GET ALL POSTS with likes
 router.get("/", async (req, res) => {
   try {
-    const posts = await Post.findAll({ include: [{ model: Like }] });
+    const posts = await Post.findAll({});
     res.send(posts);
   } catch (error) {
     console.log(error);
@@ -32,7 +32,6 @@ router.get("/:id", async (req, res) => {
   try {
     const requestedPost = await Post.findOne({
       where: { _id: req.params.id },
-      include: [{ model: Like }],
     });
     res.send(requestedPost);
   } catch (error) {
@@ -44,7 +43,7 @@ router.get("/:id", async (req, res) => {
 // Modify a post
 router.put("/:id", async (req, res) => {
   try {
-    const updatedPost = await Post.update(reqw.body, {
+    const updatedPost = await Post.update(req.body, {
       where: { _id: req.params.id },
       returning: true,
       plain: true,

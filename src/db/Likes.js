@@ -16,17 +16,17 @@ module.exports = (sequelize, DataTypes) => {
     postId: {
       type: DataTypes.INTEGER,
       required: true,
-      references: {
-        model: "Post",
-        key: "id",
-      },
+      // references: {
+      //   model: "Post",
+      //   key: "id",
+      // },
     },
     createdAt: DataTypes.DATE,
     updatedAt: DataTypes.DATE,
   });
-  Like.associate = (models) => {
-    Like.belongsTo(models.User);
-    Like.belongsTo(models.Post);
-  };
+  // Like.associate = (models) => {
+  //   Like.belongsTo(models.User);
+  //   Like.belongsTo(models.Post);
+  // };
   return Like;
 };

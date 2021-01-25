@@ -1,5 +1,6 @@
 const { Sequelize, DataTypes } = require("sequelize");
 const Post = require("./Post");
+// const Like = require("./Likes");
 const User = require("./user");
 
 const sequelize = new Sequelize(
@@ -21,6 +22,7 @@ sequelize
 //
 const models = {
   Post: Post(sequelize, DataTypes),
+  // Like: Like(sequelize, DataTypes),
   User: User(sequelize, DataTypes),
 };
 
