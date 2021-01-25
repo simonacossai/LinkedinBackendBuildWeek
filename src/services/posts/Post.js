@@ -37,4 +37,31 @@ router.get("/:id", async (req, res) => {
   }
 });
 
+// Modify a post
+router.put("/:id", async (req, res) => {
+  try {
+    const updatedPost = await Post.update(reqw.body, {
+      where: { _id: req.params.id },
+      returning: true,
+      plain: true,
+    });
+    res.send(updatedPost[1]);
+  } catch (error) {
+    console.log(error);
+    res.status(404).json({ error: error.message });
+  }
+});
+
+// Delete post
+router.delete("/:id", async (req, res) => {
+  try {
+    await Post.destroy({ where: { _id: req.params.id } }).then((deleted) => {
+      if (deleted === 1) res.send("Deleted!");
+    });
+  } catch (error) {
+    console.log(error);
+    res.status(500).json({ error: error.message });
+  }
+});
+
 module.exports = router;
