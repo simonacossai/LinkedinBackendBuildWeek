@@ -4,6 +4,7 @@ const cors = require("cors");
 const models = require("./db");
 // ROUTERS
 const postRouter = require("./services/posts/Post");
+const userRouter = require("./services/users/index")
 // PORT
 const port = process.env.PORT || 3001;
 
@@ -12,6 +13,8 @@ const server = express();
 server.use(cors());
 server.use(express.json());
 server.use("/posts", postRouter);
+server.use("/user", userRouter)
+
 
 models.sequelize
   .sync({ force: false })

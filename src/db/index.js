@@ -1,5 +1,6 @@
 const { Sequelize, DataTypes } = require("sequelize");
 const Post = require("./Post");
+const User = require("./user");
 
 const sequelize = new Sequelize(
   process.env.PGDATABASE,
@@ -20,6 +21,7 @@ sequelize
 //
 const models = {
   Post: Post(sequelize, DataTypes),
+  User: User(sequelize, DataTypes),
 };
 
 // force sequelize to create associations
