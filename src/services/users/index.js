@@ -1,5 +1,6 @@
 const express = require("express");
 const User = require("../../db").User;
+
 const {
     Op
 } = require("sequelize");
@@ -22,6 +23,7 @@ const cloudStorage = new CloudinaryStorage({
 const cloudMulter = multer({
     storage: cloudStorage
 })
+
 
 
 router
@@ -97,6 +99,16 @@ router.post(async (req, res, next) => {
     }
 });
 
+router.post(async (req, res, next) => {
+  try {
+    const newElement = await User.update(req.body);
+    res.send(newElement);
+  } catch (e) {
+    console.log(e);
+    next(e);
+  }
+});
+
 router.put("/:id/upload", cloudMulter.single("userImage"), async (req, res, next) => {
     try {
         const newImage = {
@@ -167,5 +179,6 @@ router.get("/:id/cv", async (req, res, next) => {
         next(error);
     }
 });
+
 
 module.exports = router;

@@ -1,5 +1,7 @@
 module.exports = (sequelize, DataTypes) => {
-    const User = sequelize.define("user", {
+  const User = sequelize.define(
+    "user",
+    {
       id: {
         type: DataTypes.INTEGER,
         primaryKey: true,
@@ -17,11 +19,11 @@ module.exports = (sequelize, DataTypes) => {
         type: DataTypes.STRING,
         allowNull: false,
       },
-      bio:{
+      bio: {
         type: DataTypes.TEXT,
         allowNull: false,
       },
-      title:{
+      title: {
         type: DataTypes.STRING,
         allowNull: false,
       },
@@ -29,24 +31,27 @@ module.exports = (sequelize, DataTypes) => {
         type: DataTypes.STRING,
         allowNull: false,
       },
-     image:{
-      type: DataTypes.STRING,
-      defaultValue: "http://placehold.it/50x50",
-     },
-      username:{
+      image: {
+        type: DataTypes.STRING,
+        defaultValue: "http://placehold.it/50x50",
+      },
+      username: {
         type: DataTypes.STRING,
         allowNull: false,
-      }
+      },
     },
     {
       timestamps: true,
-    });
-  
-    return User;
-  };
-  
+    }
+  );
+  // User.associate = (models) => {
+  //   User.hasMany(models.Post);
+  //   User.hasMany(models.Like);
+  // };
+  return User;
+};
 
-  /*
+/*
     "_id": "5d84937322b7b54d848eb41b", //server generated
         "name": "Diego",
         "surname": "Banovaz",
