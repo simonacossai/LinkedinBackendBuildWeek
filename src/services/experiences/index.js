@@ -1,5 +1,5 @@
 const express = require("express");
-const Experiences = require("../utilities/database").experiences;
+const Experiences = require("../../utilities/db").experiences;
 const router = express.Router();
 
 router.get("/", async (res, req, next) => {
@@ -41,3 +41,5 @@ router.get("/profile/userName/experiences",async (res, req, next)=>{
     next(error);
   }
 });
+
+module.exports= router
