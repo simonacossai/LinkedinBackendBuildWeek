@@ -27,7 +27,6 @@ const models = {
   User: User(sequelize, DataTypes),
   Post: Post(sequelize, DataTypes),
   Like: Like(sequelize, DataTypes),
-
   Experience: Experience(sequelize, DataTypes),
 };
 

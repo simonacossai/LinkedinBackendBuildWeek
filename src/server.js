@@ -11,6 +11,7 @@ const {
 const postRouter = require("./services/posts/index");
 const userRouter = require("./services/users/index");
 const experiencesRoute = require("./services/experiences/index");
+const likesRouter = require("./services/likes/index");
 
 const server = express();
 const port = process.env.PORT || 3001;
@@ -21,6 +22,7 @@ server.use(express.json());
 server.use("/posts", postRouter);
 server.use("/user", userRouter);
 server.use("/experiences", experiencesRoute);
+server.use("/post/likes", likesRouter);
 server.use(badRequestHandler);
 server.use(notFoundHandler);
 server.use(genericErrorHandler);

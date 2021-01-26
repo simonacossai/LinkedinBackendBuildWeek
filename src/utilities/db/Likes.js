@@ -5,7 +5,6 @@ module.exports = (sequelize, DataTypes) => {
       primaryKey: true,
       autoIncrement: true,
     },
-
     createdAt: DataTypes.DATE,
     updatedAt: DataTypes.DATE,
   });
