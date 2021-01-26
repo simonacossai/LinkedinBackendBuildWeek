@@ -16,13 +16,13 @@ module.exports = (sequelize, DataTypes) => {
         allowNull: false,
       },
       startDate: {
-        type: DataTypes.DATE,
+        type: DataTypes.STRING,
         allowNull: false,
       },
-      endDate: { type: DataTypes.DATE, allowNull: true },
+      endDate: { type: DataTypes.STRING, allowNull: true },
       description: {
         type: DataTypes.STRING(1000),
-        allowNull: false,
+        allowNull: true,
       },
       area: {
         type: DataTypes.STRING,
