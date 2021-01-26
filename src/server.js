@@ -32,4 +32,3 @@ models.sequelize
     server.listen(port || 3001, () => console.log("Running on port " + port));
   })
   .catch((e) => console.log(e));
-

@@ -16,16 +16,12 @@ module.exports = (sequelize, DataTypes) => {
     image: {
       type: DataTypes.STRING,
     },
-    // likeCount: {
-    //   type: DataTypes.INTEGER,
-    //   allowNull: true,
-    // },
     createdAt: DataTypes.DATE,
     updatedAt: DataTypes.DATE,
   });
   Post.associate = (models) => {
     Post.belongsTo(models.User);
-    // Post.hasMany(models.Like);
+    Post.hasMany(models.Like);
   };
   return Post;
 };
