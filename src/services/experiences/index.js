@@ -71,22 +71,14 @@ router.put(
   cloudMulter.single("experienceImage"),
   async (req, res, next) => {
     try {
-      const newImage = {
-        ...req.body,
-        date: new Date(),
-      };
-      User.update(
+      const alteredExperience = await Experience.update(
+        { image: req.file.path },
         {
-          image: req.file.path,
-        },
-        {
+          where: { id: req.params.id },
           returning: true,
-          where: {
-            id: req.params.id,
-          },
         }
       );
-      res.status(201).send("updated");
+      res.send(alteredExperience);
     } catch (error) {
       console.log(error);
       next(error);
