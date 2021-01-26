@@ -41,7 +41,7 @@ module.exports = (sequelize, DataTypes) => {
     { timestamps: true }
   );
   experiences.associate = (models) => {   
-    experiences.belongsTo(models.User);
+    experiences.belongsTo(models.User)
   };
   return experiences;
 };
