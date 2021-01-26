@@ -1,15 +1,18 @@
 const express = require("express");
-
 const Post = require("../../utilities/db").Post;
-// const Like = require("../../db").User;
+const verify = require("../auth/verifyToken");
 
 const router = express.Router();
 
 // ADD NEW POST
-router.post("/", async (req, res) => {
+router.post("/", verify, async (req, res) => {
   try {
-    const newPost = await Post.create(req.body);
-    res.status(201).send(newPost);
+    const newPost = {
+      text: req.body.text,
+      userId: req.user._id
+    }
+    await Post.create(newPost);
+    res.status(201).send(newPost);  
   } catch (error) {
     console.log(error);
     res.status(500).json({ error: error.message });
