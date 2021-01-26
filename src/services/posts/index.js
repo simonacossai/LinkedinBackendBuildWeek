@@ -1,14 +1,27 @@
 const express = require("express");
-
+const multer = require("multer");
+const cloudinary = require("../../utilities/cloudinary");
+const { CloudinaryStorage } = require("multer-storage-cloudinary");
 const Post = require("../../utilities/db").Post;
 // const Like = require("../../db").User;
 
+// router
 const router = express.Router();
+// Storage
+const storage = new CloudinaryStorage({
+  cloudinary: cloudinary,
+  params: {
+    folder: "posts",
+  },
+});
+const cloudinaryStorage = multer({
+  storage: storage,
+});
 
 // ADD NEW POST
-router.post("/", async (req, res) => {
+router.post("/", cloudinaryStorage.array("image", 2), async (req, res) => {
   try {
-    const newPost = await Post.create(req.body);
+    const newPost = await Post.create(req.body, { image: req.file });
     res.status(201).send(newPost);
   } catch (error) {
     console.log(error);
