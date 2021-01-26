@@ -5,22 +5,9 @@ module.exports = (sequelize, DataTypes) => {
       primaryKey: true,
       autoIncrement: true,
     },
-    // userId: {
-    //   type: DataTypes.INTEGER,
-    //   required: true,
-    //   references: {
-    //     model: "User",
-    //     key: "id",
-    //   },
-    // },
-    // postId: {
-    //   type: DataTypes.INTEGER,
-    //   required: true,
-    //   // references: {
-    //   //   model: "Post",
-    //   //   key: "id",
-    //   // },
-    // },
+    isLiked: {
+      type: DataTypes.BOOLEAN,
+    },
     createdAt: DataTypes.DATE,
     updatedAt: DataTypes.DATE,
   });
