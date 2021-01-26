@@ -1,5 +1,5 @@
 const express = require("express");
-const Experiences = require("../../utilities/db").experiences;
+const Experience = require("../../utilities/db").Experience;
 const router = express.Router();
 
 const multer = require("multer");
@@ -16,18 +16,18 @@ const cloudStorage = new CloudinaryStorage({
 const cloudMulter = multer({
   storage: cloudStorage,
 });
-router.get("/profile/userName/experiences/:expId", async (res, req, next) => {
+router.get("/profile/userName/experiences/:expId", async (req, res, next)=> {
   try {
-    const singleExperince = await findByPk(req.params.expId);
+    const singleExperince = await Experience.findByPk(req.params.expId);
     res.status(200).send(singleExperince);
   } catch (error) {
     console.log(error);
     next(error);
   }
 });
-router.put("/profile/userName/experiences/:expId", async (res, req, next) => {
+router.put("/profile/userName/experiences/:expId", async (req, res, next)=> {
   try {
-    const updatedExperince = await Experiences.update(req.body, {
+    const updatedExperince = await Experience.update(req.body, {
       where: { id: req.params.expId },
       returning: true,
     });
@@ -37,18 +37,18 @@ router.put("/profile/userName/experiences/:expId", async (res, req, next) => {
     next(error);
   }
 });
-router.get("/profile/userName/experiences",async (res, req, next)=>{
+router.get("/profile/userName/experiences",async (req, res, next)=>{
   try {
-    const AllExperiences = await Experiences.findAll();
-    res.status(200).send(AllExperiences);
+    const AllExperiences = await Experience.findAll();
+    res.send(AllExperiences);
   } catch (error) {
     console.log(error);
     next(error);
   }
 });
-router.post("/profile/userName/experiences",async (res, req, next)=>{
+router.post("/profile/userName/experiences",async (req, res, next)=>{
   try {
-    const newExperience = await Experiences.create(req.body);
+    const newExperience = await Experience.create(req.body);
     res.status(200).send(newExperience);
   } catch (error) {
     console.log(error);
@@ -57,7 +57,7 @@ router.post("/profile/userName/experiences",async (res, req, next)=>{
 });
 router.delete("/profile/userName/experiences/:expId", async (req, res, next) => {
   try {
-    await Experiences.destroy({
+    await Experience.destroy({
       where: { id: req.params.expId},
     });
     res.send("Experience Deleted");

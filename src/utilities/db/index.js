@@ -10,9 +10,9 @@ const sequelize = new Sequelize(
   process.env.PGPASSWORD,
   {
     host: process.env.PGHOST,
-// port: process.env.PGPORT,
+port: process.env.PGPORT,
     dialect: "postgres",
-    dialectOptions:{ssl:{require:true,rejectUnauthorized:false,},}
+   // dialectOptions:{ssl:{require:true,rejectUnauthorized:false,},}
 
   }
 );
@@ -25,9 +25,10 @@ sequelize
 
 //
 const models = {
+  User: User(sequelize, DataTypes),
   Post: Post(sequelize, DataTypes),
   // Like: Like(sequelize, DataTypes),
-  User: User(sequelize, DataTypes),
+ 
   Experience: Experience(sequelize, DataTypes),
 };
 
