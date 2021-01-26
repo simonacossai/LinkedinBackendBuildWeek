@@ -11,6 +11,7 @@ router.get("/", async (res, req, next) => {
     next(error);
   }
 });
+
 router.get("/profile/userName/experiences/:expid", async (res, req, next) => {
   try {
     const singleExperince = await findByPk(req.params.expid);
@@ -20,6 +21,7 @@ router.get("/profile/userName/experiences/:expid", async (res, req, next) => {
     next(error);
   }
 });
+
 router.put("/profile/userName/experiences/:expid", async (res, req, next) => {
   try {
     const updatedExperince = await Experiences.update(req.body, {
@@ -32,6 +34,7 @@ router.put("/profile/userName/experiences/:expid", async (res, req, next) => {
     next(error);
   }
 });
+
 router.get("/profile/userName/experiences", async (res, req, next) => {
   try {
     const AllExperiences = await Experiences.findAll();
@@ -41,3 +44,5 @@ router.get("/profile/userName/experiences", async (res, req, next) => {
     next(error);
   }
 });
+
+module.exports = router;
