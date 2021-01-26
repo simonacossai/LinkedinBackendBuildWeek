@@ -1,5 +1,5 @@
 const express = require("express");
-const User = require("../../db").User;
+const User = require("../../utilities/db").User;
 
 const {
     Op

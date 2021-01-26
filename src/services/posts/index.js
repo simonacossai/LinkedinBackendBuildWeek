@@ -1,6 +1,6 @@
 const express = require("express");
 
-const Post = require("../../db").Post;
+const Post = require("../../utilities/db").Post;
 // const Like = require("../../db").User;
 
 const router = express.Router();
