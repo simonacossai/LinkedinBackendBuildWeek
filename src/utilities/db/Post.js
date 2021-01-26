@@ -12,21 +12,16 @@ module.exports = (sequelize, DataTypes) => {
     userId: {
       type: DataTypes.INTEGER,
       required: true,
-      // references: {
-      //   model: "User",
-      //   key: "id",
-      // },
     },
-    // likeCount: {
-    //   type: DataTypes.INTEGER,
-    //   allowNull: true,
-    // },
+    image: {
+      type: DataTypes.STRING,
+    },
     createdAt: DataTypes.DATE,
     updatedAt: DataTypes.DATE,
   });
-  // Post.associate = (models) => {
-  //   Post.belongsTo(models.User);
-  //   Post.hasMany(models.Like);
-  // };
+  Post.associate = (models) => {
+    Post.belongsTo(models.User);
+    Post.hasMany(models.Like);
+  };
   return Post;
 };
