@@ -10,6 +10,8 @@ const {
 // ROUTERS
 const postRouter = require("./services/posts/index");
 const userRouter = require("./services/users/index");
+const authRouter = require("./services/auth/auth.js");
+const authPostRouter = require('./services/auth/posts.js');
 const experiencesRoute = require("./services/experiences/index");
 
 const server = express();
@@ -21,12 +23,14 @@ server.use(express.json());
 server.use("/posts", postRouter);
 server.use("/user", userRouter);
 server.use("/experiences", experiencesRoute);
+server.use("/api/user", authRouter);
+server.use("/api/posts", authPostRouter);
 server.use(badRequestHandler);
 server.use(notFoundHandler);
 server.use(genericErrorHandler);
 
 models.sequelize
-  .sync({ force: false })
+  .sync({ force: false})
 
   .then((result) => {
     server.listen(port || 3001, () => console.log("Running on port " + port));
