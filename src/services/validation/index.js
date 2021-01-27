@@ -4,15 +4,15 @@ const Joi = require('@hapi/joi');
 const registerValidation =(data)=>{
     
     const schema = Joi.object({
-        name: Joi.string().min(6).required(),
+        name: Joi.string().min(3).required(),
         surname: Joi.string().required(),
-        email: Joi.string().min(6).required().email(),
+        email: Joi.string().min(3).required().email(),
         bio: Joi.string().required(),
         title: Joi.string().required(),
         area: Joi.string().required(),
         image: Joi.string(),
         username: Joi.string().required(),
-        password: Joi.string().min(6).required()
+        password: Joi.string().min(4).required()
     })
 
      return schema.validate(data);
