@@ -3,10 +3,7 @@ const multer = require("multer");
 const cloudinary = require("../../utilities/cloudinary");
 const { CloudinaryStorage } = require("multer-storage-cloudinary");
 const Post = require("../../utilities/db").Post;
-<<<<<<< HEAD
-=======
 const verify = require("../auth/verifyToken");
->>>>>>> d5b98a45bce26b385697e410816935eade31bfba
 
 // router
 const router = express.Router();
