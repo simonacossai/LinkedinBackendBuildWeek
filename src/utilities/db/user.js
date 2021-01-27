@@ -51,7 +51,9 @@ module.exports = (sequelize, DataTypes) => {
   User.associate = (models) => {
     User.hasMany(models.Experience);
     User.hasMany(models.Like);
+    User.hasMany(models.Post)
   };
+  
   return User;
 };
 

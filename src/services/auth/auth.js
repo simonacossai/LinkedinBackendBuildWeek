@@ -56,6 +56,7 @@ router.post("/login", async (req, res, next) => {
         if(error){
             return res.status(400).send(error.details[0].message)
         }
+
         const user = await User.findAll({
             where: {
               email: req.body.email
@@ -73,10 +74,11 @@ router.post("/login", async (req, res, next) => {
         //create and assign a token
 
         const token = jwt.sign({_id: user[0].id}, process.env.TOKEN_SECRET)
-        res.header('auth-token', token).send(token)
-        } catch (error) {
-            console.log(error)
-            next(error)
+        res.header('auth-token', token)
+        res.send({token: token})
+        } catch (e) {
+            console.log(e)
+            next(e)
         }
 })
 

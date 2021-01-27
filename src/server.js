@@ -24,7 +24,6 @@ server.use("/posts", postRouter);
 server.use("/user", userRouter);
 server.use("/experiences", experiencesRoute);
 server.use("/api/user", authRouter);
-server.use("/post/likes", likesRouter);
 server.use(badRequestHandler);
 server.use(notFoundHandler);
 server.use(genericErrorHandler);
