@@ -1,4 +1,5 @@
 const express = require("express");
+const { Op } = require("sequelize");
 const Like = require("../../utilities/db").Like;
 const User = require("../../utilities/db").User;
 const Post = require("../../utilities/db").Post;
@@ -13,11 +14,18 @@ if liked?  isliked:true else isLiked
 
 router.post("/:postId/:userId", async (req, res) => {
   try {
-    const user = await User.findOne({ where: { id: req.params.userId } });
-    const post = await Post.findOne({ where: { _id: req.params.postId } });
-    const like = await Like.findOne({ where: { isLiked } });
-    if (!like) {
-      const newLike = await Like.create({});
+    const post = await Post.findByPk(req.params.postId);
+    const user = await User.findByPk(req.params.userId);
+
+    if (post && user) {
+      const newLike = await Like.create({
+        postId: req.params.postId,
+        userId: req.params.userId,
+      });
+      res.send(newLike);
+    } else {
+      await Like.destroy();
+      res.send();
     }
   } catch (error) {
     console.log(error);
@@ -36,3 +44,5 @@ router.post("/:postId/:userId", async (req, res) => {
  * if liked ? delete
  * else create
  */
+
+module.exports = router;
