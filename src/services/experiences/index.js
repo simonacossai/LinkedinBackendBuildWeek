@@ -16,6 +16,50 @@ const cloudStorage = new CloudinaryStorage({
 const cloudMulter = multer({
   storage: cloudStorage,
 });
+router.get("/profile/userName/experiences/CSV", async (req, res, next) => {
+  try {
+    let pdfDoc = new PDFDocument();
+    const data = await Experience.findAll();
+    if (data) {
+      data.map((experience)=>{
+      res.setHeader("Content-Type", "application/pdf");
+      
+      pdfDoc.fontSize(30).text(`${experience.role} ${experience.company}`, {
+        width: 410,
+        align: "center",
+        height: 200,
+        lineGap: 10,
+      });
+        
+      pdfDoc.fontSize(11).text("- role: " + experience.role, 100);
+      pdfDoc.fontSize(11).text("- company: " + experience.company, 100);
+      pdfDoc.fontSize(11).text("- startDate: " + experience.startDate, 100);
+      pdfDoc.fontSize(11).text("- endDate: " + experience.endDate, 100);
+      pdfDoc.fontSize(11).text("- area: " + experience.area, {
+        lineGap: 22,
+      });
+    })
+     
+      pdfDoc.fontSize(12).text(data.username, {
+        columns: 3,
+        columnGap: 15,
+        height: 100,
+        width: 465,
+        align: "justify",
+      });
+      pdfDoc.fontSize(15).text(" ", {
+        lineGap: 13,
+      });
+      pdfDoc.pipe(res);
+      pdfDoc.end();
+    } else {
+      const err = new Error();
+      next(err);
+    }
+  } catch (error) {
+    next(error);
+  }
+});
 router.get("/profile/userName/experiences/:expId", async (req, res, next)=> {
   try {
     const singleExperince = await Experience.findByPk(req.params.expId);
@@ -68,7 +112,7 @@ router.delete("/profile/userName/experiences/:expId", async (req, res, next) => 
 });
 router.put(
   "/:id/upload",
-  cloudMulter.single("experienceImage"),
+cloudMulter.single("experienceImage"),
   async (req, res, next) => {
     try {
       const alteredExperience = await Experience.update(
@@ -79,6 +123,8 @@ router.put(
         }
       );
       res.send(alteredExperience);
+      console.log(req.file.path)
+     
     } catch (error) {
       console.log(error);
       next(error);
@@ -86,50 +132,5 @@ router.put(
   }
 );
 
-router.get("/:id/cv", async (req, res, next) => {
-  try {
-    let pdfDoc = new PDFDocument();
-    const data = await User.findByPk(req.params.id);
-    if (data) {
-      res.setHeader("Content-Type", "application/pdf");
-      pdfDoc.fontSize(30).text(`${data.name} ${data.surname} CV`, {
-        width: 410,
-        align: "center",
-        height: 200,
-        lineGap: 10,
-      });
 
-      pdfDoc.fontSize(12).text("- name: " + data.name, 100);
-      pdfDoc.fontSize(12).text("- surname: " + data.surname, 100);
-      pdfDoc.fontSize(12).text("- email: " + data.email, 100);
-      pdfDoc.fontSize(12).text("- title: " + data.title, 100);
-      pdfDoc.fontSize(12).text("- area: " + data.area, {
-        lineGap: 22,
-      });
-      pdfDoc.fontSize(25).text("ABOUT ME", {
-        lineGap: 10,
-      });
-      pdfDoc.fontSize(12).text(data.bio, {
-        columns: 3,
-        columnGap: 15,
-        height: 100,
-        width: 465,
-        align: "justify",
-      });
-      pdfDoc.fontSize(15).text(" ", {
-        lineGap: 13,
-      });
-      pdfDoc.fontSize(25).text("EXPERIENCES", {
-        lineGap: 20,
-      });
-      pdfDoc.pipe(res);
-      pdfDoc.end();
-    } else {
-      const err = new Error();
-      next(err);
-    }
-  } catch (error) {
-    next(error);
-  }
-});
 module.exports= router
