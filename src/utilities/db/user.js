@@ -48,11 +48,10 @@ module.exports = (sequelize, DataTypes) => {
       timestamps: true,
     }
   );
-   User.associate = (models) => {
-    //User.hasMany(models.Post);
-     //User.hasMany(models.Like);
-     User.hasMany(models.Experience)
-   };
+  User.associate = (models) => {
+    User.hasMany(models.Experience);
+ 
+  };
   return User;
 };
 

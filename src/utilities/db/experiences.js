@@ -1,5 +1,5 @@
 module.exports = (sequelize, DataTypes) => {
-  const experiences = sequelize.define(
+  const Experience = sequelize.define(
     "experiences",
     {
       id: {
@@ -16,13 +16,13 @@ module.exports = (sequelize, DataTypes) => {
         allowNull: false,
       },
       startDate: {
-        type: DataTypes.DATE,
+        type: DataTypes.STRING,
         allowNull: false,
       },
-      endDate: { type: DataTypes.DATE, allowNull: true },
+      endDate: { type: DataTypes.STRING, allowNull: true },
       description: {
         type: DataTypes.STRING(1000),
-        allowNull: false,
+        allowNull: true,
       },
       area: {
         type: DataTypes.STRING,
@@ -40,8 +40,8 @@ module.exports = (sequelize, DataTypes) => {
     },
     { timestamps: true }
   );
-  experiences.associate = (models) => {   
-    experiences.belongsTo(models.User)
+  Experience.associate = (models) => {   
+    Experience.belongsTo(models.User);
   };
-  return experiences;
+  return Experience;
 };
