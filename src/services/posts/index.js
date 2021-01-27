@@ -25,12 +25,11 @@ router.post("/", cloudinaryStorage.array("image", 2),verify, async (req, res) =>
     const newPost = await Post.create({
       ...req.body,
       image: req.files[0].path,
-      userId: req.body.userId
     });
     res.status(201).send(newPost);
-  }catch (err) {
-    console.log(err);
-    res.status(500).json({error: error.message})
+  } catch (error) {
+    console.log(error);
+    res.status(500).json({ error: error.message });
   }
 });
 

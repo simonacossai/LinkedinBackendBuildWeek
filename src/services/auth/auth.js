@@ -6,7 +6,6 @@ const {registerValidation, loginValidation} = require('../validation');
 const bcrypt= require('bcryptjs')
 
 router.post('/register', async(req, res, next)=>{
-   
     //validate data before creating new user
     try {
         const {error}= registerValidation(req.body)
@@ -68,8 +67,6 @@ router.post("/login", async (req, res, next) => {
 
         const validPassword =await bcrypt.compare(req.body.password, user[0].password);
         if(!validPassword) { return res.status(400).send("Invalid password")}
-        
-
 
         //create and assign a token
 
