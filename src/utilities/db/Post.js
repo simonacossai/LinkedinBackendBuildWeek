@@ -12,21 +12,24 @@ module.exports = (sequelize, DataTypes) => {
     userId: {
       type: DataTypes.INTEGER,
       required: true,
-      // references: {
-      //   model: "User",
-      //   key: "id",
-      // },
     },
-    // likeCount: {
-    //   type: DataTypes.INTEGER,
-    //   allowNull: true,
+    image: {
+      type: DataTypes.STRING,
+    },
+    likeCount: {
+      type: DataTypes.INTEGER,
+      defaultValue: 0,
+    },
+    // isLiked: {
+    //   type: DataTypes.BOOLEAN,
+    //   defaultValue: false,
     // },
     createdAt: DataTypes.DATE,
     updatedAt: DataTypes.DATE,
   });
-  // Post.associate = (models) => {
-  //   Post.belongsTo(models.User);
-  //   Post.hasMany(models.Like);
-  // };
+  Post.associate = (models) => {
+    Post.belongsTo(models.User);
+    Post.hasMany(models.Like);
+  };
   return Post;
 };

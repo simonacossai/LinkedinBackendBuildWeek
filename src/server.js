@@ -1,5 +1,5 @@
 const express = require("express");
-require("dotenv").config();
+
 const cors = require("cors");
 const models = require("./utilities/db");
 const {
@@ -11,8 +11,8 @@ const {
 const postRouter = require("./services/posts/index");
 const userRouter = require("./services/users/index");
 const authRouter = require("./services/auth/auth.js");
-const authPostRouter = require('./services/auth/posts.js');
 const experiencesRoute = require("./services/experiences/index");
+const likesRouter = require("./services/likes/index");
 
 const server = express();
 const port = process.env.PORT || 3001;
@@ -24,7 +24,7 @@ server.use("/posts", postRouter);
 server.use("/user", userRouter);
 server.use("/experiences", experiencesRoute);
 server.use("/api/user", authRouter);
-server.use("/api/posts", authPostRouter);
+server.use("/post/likes", likesRouter);
 server.use(badRequestHandler);
 server.use(notFoundHandler);
 server.use(genericErrorHandler);
@@ -36,4 +36,3 @@ models.sequelize
     server.listen(port || 3001, () => console.log("Running on port " + port));
   })
   .catch((e) => console.log(e));
-

@@ -1,6 +1,6 @@
 const { Sequelize, DataTypes } = require("sequelize");
 const Post = require("./Post");
-// const Like = require("./Likes");
+const Like = require("./Likes");
 const User = require("./user");
 const Experience = require("./experiences");
 
@@ -10,10 +10,9 @@ const sequelize = new Sequelize(
   process.env.PGPASSWORD,
   {
     host: process.env.PGHOST,
-port: process.env.PGPORT,
+    port: process.env.PGPORT,
     dialect: "postgres",
-   // dialectOptions:{ssl:{require:true,rejectUnauthorized:false,},}
-
+    // dialectOptions:{ssl:{require:true,rejectUnauthorized:false,},}
   }
 );
 
@@ -27,11 +26,9 @@ sequelize
 const models = {
   User: User(sequelize, DataTypes),
   Post: Post(sequelize, DataTypes),
-  // Like: Like(sequelize, DataTypes),
- 
+  Like: Like(sequelize, DataTypes),
   Experience: Experience(sequelize, DataTypes),
 };
-
 
 // force sequelize to create associations
 Object.keys(models).forEach((modelName) => {

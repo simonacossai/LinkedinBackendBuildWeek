@@ -40,7 +40,8 @@ module.exports = (sequelize, DataTypes) => {
     },
     { timestamps: true }
   );
-  Experience.associate = (models) => {   
+
+  Experience.associate = (models) => {
     Experience.belongsTo(models.User);
   };
   return Experience;
