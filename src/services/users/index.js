@@ -1,6 +1,5 @@
 const express = require("express");
 const User = require("../../utilities/db").User;
-
 const { Op } = require("sequelize");
 const multer = require("multer");
 const cloudinary = require("cloudinary").v2;
@@ -9,6 +8,7 @@ const upload = multer({});
 const router = express.Router();
 const PDFDocument = require("pdfkit");
 const { heightOfString } = require("pdfkit");
+const verify = require("../auth/verifyToken");
 
 const cloudStorage = new CloudinaryStorage({
   cloudinary: cloudinary,
@@ -22,7 +22,7 @@ const cloudMulter = multer({
 
 router
   .route("/")
-  .get(async (req, res, next) => {
+  .get(verify, async (req, res, next) => {
     try {
       const data = await User.findAll({});
       res.send(data);
@@ -31,19 +31,10 @@ router
       next(e);
     }
   })
-  .post(async (req, res, next) => {
-    try {
-      const newElement = await User.create(req.body);
-      res.send(newElement);
-    } catch (e) {
-      console.log(e);
-      next(e);
-    }
-  });
 
 router
   .route("/:id")
-  .get(async (req, res, next) => {
+  .get(verify, async (req, res, next) => {
     try {
       const data = await User.findByPk(req.params.id);
       res.send(data);
@@ -52,7 +43,7 @@ router
       next(e);
     }
   })
-  .put(async (req, res, next) => {
+  .put(verify, async (req, res, next) => {
     try {
       const updatedData = await User.update(req.body, {
         returning: true,
@@ -83,29 +74,10 @@ router
     }
   });
 
-router.post(async (req, res, next) => {
-  try {
-    const newElement = await User.update(req.body);
-    res.send(newElement);
-  } catch (e) {
-    console.log(e);
-    next(e);
-  }
-});
-
-router.post(async (req, res, next) => {
-  try {
-    const newElement = await User.update(req.body);
-    res.send(newElement);
-  } catch (e) {
-    console.log(e);
-    next(e);
-  }
-});
 
 router.put(
   "/:id/upload",
-  cloudMulter.single("userImage"),
+  cloudMulter.single("userImage"), verify,
   async (req, res, next) => {
     try {
       const newImage = {
