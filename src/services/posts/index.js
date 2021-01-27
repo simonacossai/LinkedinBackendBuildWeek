@@ -3,7 +3,6 @@ const multer = require("multer");
 const cloudinary = require("../../utilities/cloudinary");
 const { CloudinaryStorage } = require("multer-storage-cloudinary");
 const Post = require("../../utilities/db").Post;
-// const Like = require("../../db").User;
 
 // router
 const router = express.Router();
@@ -25,6 +24,7 @@ router.post("/", cloudinaryStorage.array("image", 2), async (req, res) => {
     const newPost = await Post.create({
       ...req.body,
       image: req.files[0].path,
+      userId: req.user._id,
     });
     res.status(201).send(newPost);
   } catch (error) {
