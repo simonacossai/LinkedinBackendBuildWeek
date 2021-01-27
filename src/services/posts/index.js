@@ -35,7 +35,6 @@ router.post("/", cloudinaryStorage.array("image", 2),verify, async (req, res) =>
 });
 
 
-
 // GET ALL POSTS with likes
 router.get("/", async (req, res) => {
   try {
