@@ -2,6 +2,7 @@ const { Sequelize, DataTypes } = require("sequelize");
 const Post = require("./Post");
 const Like = require("./Likes");
 const User = require("./user");
+const Comment = require("./comment");
 const Experience = require("./experiences");
 
 const sequelize = new Sequelize(
@@ -27,6 +28,7 @@ const models = {
   User: User(sequelize, DataTypes),
   Post: Post(sequelize, DataTypes),
   Like: Like(sequelize, DataTypes),
+  Comment: Comment(sequelize, DataTypes),
   Experience: Experience(sequelize, DataTypes),
 };
 
@@ -41,5 +43,4 @@ Object.keys(models).forEach((modelName) => {
 models.sequelize = sequelize;
 // Include all configurations
 models.Sequelize = Sequelize;
-
 module.exports = models;

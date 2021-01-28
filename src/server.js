@@ -10,6 +10,7 @@ const {
 // ROUTERS
 const postRouter = require("./services/posts/index");
 const userRouter = require("./services/users/index");
+const commentRouter = require("./services/comments/index");
 const authRouter = require("./services/auth/auth.js");
 const experiencesRoute = require("./services/experiences/index");
 const likesRouter = require("./services/likes/index");
@@ -23,6 +24,7 @@ server.use(express.json());
 server.use("/posts", postRouter);
 server.use("/user", userRouter);
 server.use("/experiences", experiencesRoute);
+server.use("/comments", commentRouter)
 server.use("/api/user", authRouter);
 server.use(badRequestHandler);
 server.use(notFoundHandler);
