@@ -21,7 +21,6 @@ const cloudinaryStorage = multer({
 // ADD NEW POST
 router.post("/", cloudinaryStorage.array("image", 2),verify, async (req, res) => {
   try {
-    console.log(req.files);
     const newPost = await Post.create({
       ...req.body,
       image: req.files[0].path,
