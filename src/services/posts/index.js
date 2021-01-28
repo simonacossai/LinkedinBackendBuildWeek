@@ -3,6 +3,7 @@ const multer = require("multer");
 const cloudinary = require("../../utilities/cloudinary");
 const { CloudinaryStorage } = require("multer-storage-cloudinary");
 const Post = require("../../utilities/db").Post;
+const User = require("../../utilities/db").User;
 const Comment = require("../../utilities/db").Comment;
 const verify = require("../auth/verifyToken");
 
@@ -39,8 +40,10 @@ router.post("/", cloudinaryStorage.array("image", 2),verify, async (req, res) =>
 router.get("/", async (req, res) => {
   try {
     const posts = await Post.findAll({include: [{
-      model: Comment
-    }]});
+      model: Comment},
+      {model: User,
+      attributes: ['username', 'image']}
+    ]});
     res.send(posts);
   } catch (error) {
     console.log(error);
