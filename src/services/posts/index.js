@@ -3,8 +3,8 @@ const multer = require("multer");
 const cloudinary = require("../../utilities/cloudinary");
 const { CloudinaryStorage } = require("multer-storage-cloudinary");
 const Post = require("../../utilities/db").Post;
-const User = require("../../utilities/db").User;
 const Comment = require("../../utilities/db").Comment;
+const User = require("../../utilities/db").User;
 const verify = require("../auth/verifyToken");
 
 // router

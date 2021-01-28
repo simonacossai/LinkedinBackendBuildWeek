@@ -3,6 +3,7 @@ const Comment = require("../../utilities/db").Comment;
 const { Op } = require("sequelize");
 const router = express.Router();
 const verify = require("../auth/verifyToken");
+const User = require("../../utilities/db").User;
 
 router
   .route("/:id")
@@ -46,16 +47,20 @@ router
       next(e);
     }
   });
-  router.post("/", verify, async (req, res) => {
+  router.post("/", verify, async (req, res,next) => {
     try {
+     const data = await User.findByPk(req.user._id, {attributes:['username']});
+     console.log(req.body)
       const newComment = await Comment.create({
         ...req.body,
         userId: req.user._id,
+        name: data.username
       });
       res.status(201).send(newComment);
     } catch (error) {
       console.log(error);
       res.status(500).json({ error: error.message });
+      next(error)
     }
   });
 
