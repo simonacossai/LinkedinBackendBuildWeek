@@ -95,32 +95,10 @@ router.post("/profile/userName/experiences",async (req, res, next)=>{
     const newExperience = await Experience.create(req.body);
     res.status(200).send(newExperience);
   } catch (error) {
-    next(error)
-  }
-});
-router.get("/profile/userName/experiences/:expid", async (res, req, next) => {
-  try {
-    const singleExperince = await findByPk(req.params.expid);
-    res.status(200).send(singleExperince);
-  } catch (error) {
     console.log(error);
     next(error);
   }
 });
-
-router.put("/profile/userName/experiences/:expId", async (req, res, next)=> {
-  try {
-    const updatedExperince = await Experience.update(req.body, {
-      where: { id: req.params.expId },
-      returning: true,
-    });
-    res.send(updatedExperince);
-  } catch (error) {
-    console.log(error);
-    next(error);
-  }
-});
-
 router.delete("/profile/userName/experiences/:expId", async (req, res, next) => {
   try {
     await Experience.destroy({
@@ -132,13 +110,12 @@ router.delete("/profile/userName/experiences/:expId", async (req, res, next) => 
     next(error);
   }
 });
-
-
 router.put(
   "/:id/upload",
 cloudMulter.single("experienceImage"),
   async (req, res, next) => {
     try {
+      console.log(req.file.path)
       const alteredExperience = await Experience.update(
         { image: req.file.path },
         {
@@ -156,14 +133,5 @@ cloudMulter.single("experienceImage"),
   }
 );
 
-router.get("/profile/userName/experiences", async (res, req, next) => {
-  try {
-    const AllExperiences = await Experiences.findAll();
-    res.status(200).send(AllExperiences);
-  } catch (error) {
-    console.log(error);
-    next(error);
-  }
-});
 
-module.exports = router;
+module.exports= router
