@@ -32,11 +32,7 @@ module.exports = (sequelize, DataTypes) => {
         type: DataTypes.STRING(500),
         allowNull: false,
         defaultValue: "http://placehold.it/50x50",
-      },
-      username: {
-        type: DataTypes.STRING,
-        allowNull: false,
-      },
+      }
     },
     { timestamps: true }
   );
